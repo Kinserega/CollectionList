@@ -6,54 +6,56 @@ import skypro.CollectionsList.Exception.EmployeeNotFoundException;
 import skypro.CollectionsList.Exception.EmployeeStorageIsFullException;
 import skypro.CollectionsList.Interface.EmployeeService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
-    private final int STOPLIST = 5;
-    private final List<Employee> employees = new ArrayList<>();
+public class EmployeeServiceImpl implements EmployeeService{
+    private final Map<String, Employee> employeesFullName = new HashMap<>();
+    private final int STOP = 5;
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        if (employees.size() == STOPLIST) {
-            throw new EmployeeStorageIsFullException("Хранилище полное!");
+        if (employeesFullName.size() >= STOP) {
+            throw new EmployeeStorageIsFullException("Мэп переполнен");
         }
-        if (employees.contains(employee)) {
-            throw new EmployeeAlreadyAddedException("Такой сотрудник уже есть!");
+        Employee newEmployee = new Employee(firstName, lastName);
+        String fullName = getFullName(newEmployee);
+        if (employeesFullName.containsKey(fullName)) {
+            throw new EmployeeAlreadyAddedException("Такой сотрудник уже есть");
         }
-        employees.add(employee);
-        return employee;
-    }
-
-    @Override
-    public void removeEmployee(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        if (!employees.contains(employee)) {
-            throw new EmployeeNotFoundException("Такой сотрудник не найден");
-        }
-        employees.remove(employee);
-
+        employeesFullName.put(fullName, newEmployee);
+        return newEmployee;
     }
 
     @Override
     public Employee findEmployee(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        if (!employees.contains(employee)) {
+        Employee newEmployee = new Employee(firstName, lastName);
+        String fullName = getFullName(newEmployee);
+        if (!employeesFullName.containsKey(fullName)) {
             throw new EmployeeNotFoundException("Такой сотрудник не найден");
         }
-        for (Employee employee1 : employees) {
-            if (employee1.equals(employee)) {
-                return employee1;
-            }
-        }
-        return null;
+        return employeesFullName.get(fullName);
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
-        return employees;
+    public Employee removeEmployee(String firstName, String lastName) {
+        Employee newEmployee = new Employee(firstName, lastName);
+        String fullName = getFullName(newEmployee);
+        if (!employeesFullName.containsKey(fullName)) {
+            throw new EmployeeNotFoundException("Такой сотрудник не найден");
+        }
+        employeesFullName.remove(fullName);
+        return newEmployee;
     }
+
+    @Override
+    public Collection<Employee> getAllEmployees() {
+        return employeesFullName.values();
+    }
+
+    private String getFullName(Employee employee) {
+        return employee.getFirstName() + employee.getLastName();
+    }
+
 
 }

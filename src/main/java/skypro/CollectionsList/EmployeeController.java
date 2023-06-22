@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import skypro.CollectionsList.Interface.EmployeeService;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class EmployeeController {
@@ -26,8 +28,8 @@ public class EmployeeController {
     public Employee findEmployee(@RequestParam ("firstName") String firstName, @RequestParam ("lastName") String lastName){
         return employeeService.findEmployee(firstName, lastName);
     }
-    @GetMapping
-    public List<Employee> getAllEmployees(){
+    @GetMapping(path = "/get")
+    public Collection<Employee> getAllEmployees(){
         return employeeService.getAllEmployees();
     }
 
