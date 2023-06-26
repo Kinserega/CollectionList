@@ -9,16 +9,16 @@ import skypro.CollectionsList.Interface.EmployeeService;
 import java.util.*;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService{
-    private final Map<String, Employee> employeesFullName = new HashMap<>();
+public class EmployeeServiceImpl implements EmployeeService {
+    public Map<String, Employee> employeesFullName = new HashMap<>();
     private final int STOP = 5;
 
     @Override
-    public Employee addEmployee(String firstName, String lastName) {
+    public Employee addEmployee(String firstName, String lastName, int department, float salary) {
         if (employeesFullName.size() >= STOP) {
             throw new EmployeeStorageIsFullException("Мэп переполнен");
         }
-        Employee newEmployee = new Employee(firstName, lastName);
+        Employee newEmployee = new Employee(firstName, lastName,department,salary);
         String fullName = getFullName(newEmployee);
         if (employeesFullName.containsKey(fullName)) {
             throw new EmployeeAlreadyAddedException("Такой сотрудник уже есть");
@@ -28,8 +28,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Employee findEmployee(String firstName, String lastName) {
-        Employee newEmployee = new Employee(firstName, lastName);
+    public Employee findEmployee(String firstName, String lastName, int department, float salary) {
+        Employee newEmployee = new Employee(firstName, lastName,department,salary);
         String fullName = getFullName(newEmployee);
         if (!employeesFullName.containsKey(fullName)) {
             throw new EmployeeNotFoundException("Такой сотрудник не найден");
@@ -38,8 +38,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Employee removeEmployee(String firstName, String lastName) {
-        Employee newEmployee = new Employee(firstName, lastName);
+    public Employee removeEmployee(String firstName, String lastName, int department, float salary) {
+        Employee newEmployee = new Employee(firstName, lastName,department,salary);
         String fullName = getFullName(newEmployee);
         if (!employeesFullName.containsKey(fullName)) {
             throw new EmployeeNotFoundException("Такой сотрудник не найден");
