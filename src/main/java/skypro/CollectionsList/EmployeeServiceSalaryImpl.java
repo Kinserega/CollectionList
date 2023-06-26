@@ -6,7 +6,10 @@ import skypro.CollectionsList.Interface.EmployeeServiceSalary;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 @Service
 public class EmployeeServiceSalaryImpl implements EmployeeServiceSalary {
@@ -42,9 +45,9 @@ public class EmployeeServiceSalaryImpl implements EmployeeServiceSalary {
     }
 
     @Override
-    public List<Employee> allEmployeeByOffice() {
+    public Map<Integer, List<Employee>> allEmployeeByOffice() {
         return employeeService.getAllEmployees().stream()
                 .sorted(Comparator.comparingDouble(employee -> employee.getSalary()))
-                .collect(Collectors.toList());
+                .collect(groupingBy(Employee::getDepartment));
     }
 }

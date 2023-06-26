@@ -2,6 +2,7 @@ package skypro.CollectionsList.Interface;
 
 import skypro.CollectionsList.Employee;
 import java.util.List;
+import java.util.Map;
 
 
 public interface EmployeeServiceSalary {
@@ -9,6 +10,6 @@ public interface EmployeeServiceSalary {
     Employee employeeWichMinSalary(int office);
     List<Employee> employeeByOffice(int office);
 
-    List<Employee> allEmployeeByOffice();
+    Map<Integer, List<Employee>> allEmployeeByOffice();
 
 }
