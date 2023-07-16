@@ -32,7 +32,7 @@ public class EmployeeSalaryController {
     }
     @GetMapping("/all")
     public List<Employee> allEmployeeByOffice() {
-        return employeeServiceSalary.allEmployeeByOffice();
+        return (List<Employee>) employeeServiceSalary.allEmployeeByOffice();
     }
 
 }

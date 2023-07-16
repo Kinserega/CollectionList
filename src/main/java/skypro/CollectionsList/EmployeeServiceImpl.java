@@ -16,6 +16,9 @@ import static org.apache.commons.lang3.StringUtils.isAlpha;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     public Map<String, Employee> employeesFullName = new HashMap<>();
+    public Map<String, Employee> getEmployees() {
+        return employeesFullName;
+    }
     private final int STOP = 5;
 
     @Override
