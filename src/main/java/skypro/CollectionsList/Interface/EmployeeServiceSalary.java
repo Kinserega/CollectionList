@@ -6,9 +6,9 @@ import java.util.Map;
 
 
 public interface EmployeeServiceSalary {
-    Employee employeeWichMaxSalary(int office);
-    Employee employeeWichMinSalary(int office);
-    List<Employee> employeeByOffice(int office);
+    Employee employeeWichMaxSalary(int department);
+    Employee employeeWichMinSalary(int department);
+    List<Employee> employeeByOffice(int department);
 
     Map<Integer, List<Employee>> allEmployeeByOffice();
 

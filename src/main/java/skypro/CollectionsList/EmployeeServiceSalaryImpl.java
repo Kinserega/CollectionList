@@ -21,7 +21,7 @@ public class EmployeeServiceSalaryImpl implements EmployeeServiceSalary {
 
     @Override
     public Employee employeeWichMaxSalary(int department) {
-        return employeeService.getAllEmployees().stream()
+        return employeeService.getEmployees().values().stream()
                 .filter(e -> e.getDepartment() == department)
                 .max(Comparator.comparingDouble(employee -> employee.getSalary()))
                 .orElseThrow(RuntimeException::new);
@@ -30,7 +30,8 @@ public class EmployeeServiceSalaryImpl implements EmployeeServiceSalary {
 
     @Override
     public Employee employeeWichMinSalary(int department) {
-        return employeeService.getAllEmployees().stream()
+
+        return employeeService.getEmployees().values().stream()
                 .filter(e -> e.getDepartment() == department)
                 .min(Comparator.comparingDouble(employee -> employee.getSalary()))
                 .orElseThrow(RuntimeException::new);
@@ -38,7 +39,7 @@ public class EmployeeServiceSalaryImpl implements EmployeeServiceSalary {
 
     @Override
     public List<Employee> employeeByOffice(int department) {
-        return employeeService.getAllEmployees().stream()
+        return employeeService.getEmployees().values().stream()
                 .filter(e->e.getDepartment() == department)
                 .sorted(Comparator.comparingDouble(employee -> employee.getSalary()))
                 .collect(Collectors.toList());
@@ -46,7 +47,7 @@ public class EmployeeServiceSalaryImpl implements EmployeeServiceSalary {
 
     @Override
     public Map<Integer, List<Employee>> allEmployeeByOffice() {
-        return employeeService.getAllEmployees().stream()
+        return employeeService.getEmployees().values().stream()
                 .sorted(Comparator.comparingDouble(employee -> employee.getSalary()))
                 .collect(groupingBy(Employee::getDepartment));
     }
