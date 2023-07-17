@@ -7,7 +7,6 @@ import skypro.CollectionsList.Exception.EmployeeStorageIsFullException;
 import skypro.CollectionsList.Exception.InvalidImputException;
 import skypro.CollectionsList.Interface.EmployeeService;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,11 +15,7 @@ import static org.apache.commons.lang3.StringUtils.isAlpha;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     public Map<String, Employee> employeesFullName = new HashMap<>();
-    public Map<String, Employee> getEmployees() {
-        return employeesFullName;
-    }
     private final int STOP = 5;
-
     @Override
     public Employee addEmployee(String firstName, String lastName, int department, float salary) {
         if (!examination(firstName, lastName)) {
@@ -61,8 +56,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Collection<Employee> getAllEmployees() {
-        return employeesFullName.values();
+    public Map<String, Employee> getEmployees() {
+        return employeesFullName;
     }
 
     private String getFullName(Employee employee) {

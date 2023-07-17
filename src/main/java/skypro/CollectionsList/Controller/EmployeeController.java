@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import skypro.CollectionsList.Employee;
 import skypro.CollectionsList.Interface.EmployeeService;
 
-import java.util.Collection;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/employee")
@@ -31,8 +31,8 @@ public class EmployeeController {
         return employeeService.findEmployee(firstName, lastName, department, salary);
     }
     @GetMapping(path = "/get")
-    public Collection<Employee> getAllEmployees(){
-        return employeeService.getAllEmployees();
+    public Map<String, Employee> getEmployees(){
+        return employeeService.getEmployees();
     }
 
 }
